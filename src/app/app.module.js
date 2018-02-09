@@ -5,6 +5,8 @@
     'pascalprecht.translate',
     'tmh.dynamicLocale',
     'ui.router',
+    'ngMaterial',
+    'md.data.table'
   ]);
 
 })();

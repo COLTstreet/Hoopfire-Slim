@@ -1,7 +1,141 @@
-<span ng-bind="vm.greeting"></span>
+<div class="container">
+    <div layout="row" layout-xs="column">
+        <div flex class="card-left">
+            <div layout="column" ng-cloak>
+                <form ng-submit="$event.preventDefault()" name="searchForm">
+                    <div layout-gt-sm="row">
+                        <md-autocomplete flex required
+                            md-input-name="autocompleteField"
+                            md-no-cache="vm.noCache"
+                            md-selected-item="vm.selectedTeamLeft"
+                            md-selected-item-change="vm.leftTeamChange(team)"
+                            md-search-text="vm.searchTextLeft"
+                            md-items="team in vm.querySearch(vm.searchTextLeft)"
+                            md-item-text="team.fields.team.stringValue"
+                            md-floating-label="Select a team">
+                            <md-item-template>
+                                <span md-highlight-text="vm.searchTextLeft">{{team.fields.team.stringValue}}</span>
+                            </md-item-template>
+                        </md-autocomplete>
+                    </div>
+                </form>
+            </div>
+            <div layout="row">
+                <div class="team-icons" layout="column">
+                    <div id="homeLeft" class="home-icon home-icon-color" ng-click="vm.toggleHomeCourt('left');">
+                        <i class="fas fa-h-square fa-3x"></i>
+                    </div>
+                    <div>
+                        <a style="color: #f44336;" href="https://www.sportsinsights.com/ncaab/injuries/" target="_blank"><i class="fas fa-medkit fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="team-name-container">
+                    <div class="team-name" layout="row" layout-xs="column" layout-align-xs="end end">
+                        <span style="line-height: 1;">{{vm.prettyLeft}}</span>
+                        <span ng-if="vm.selectedTeamLeft" style="font-size: 20px; margin: auto 0;">({{vm.selectedTeamLeft.fields.winLoss.stringValue}})</span>
+                        <span style="line-height: 1;">{{vm.leftScore}}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="left-win-container " ng-if="vm.leftWinner">
+                <p>
+                    <span>Confidence Score: {{vm.confidenceScore}}%</span>
+                    <i class="fas fa-check-circle fa-2x green"></i>
+                </p>
+            </div>
+        </div>
+        <div flex class="card-right">
+            <div layout="column" ng-cloak>
+                <form ng-submit="$event.preventDefault()" name="searchForm">
+                    <div layout-gt-sm="row">
+                        <md-autocomplete flex required
+                            md-input-name="autocompleteField"
+                            md-no-cache="vm.noCache"
+                            md-selected-item="vm.selectedTeamRight"
+                            md-selected-item-change="vm.rightTeamChange(team)"
+                            md-search-text="vm.searchTextRight"
+                            md-items="team in vm.querySearch(vm.searchTextRight)"
+                            md-item-text="team.fields.team.stringValue"
+                            md-floating-label="Select a team">
+                            <md-item-template>
+                                <span md-highlight-text="vm.searchTextRight">{{team.fields.team.stringValue}}</span>
+                            </md-item-template>
+                        </md-autocomplete>
+                    </div>
+                </form>
+            </div>
+            <div layout="row" layout-align="end none">
+                <div class="team-name-container">
+                    <div class="team-name" layout="row" layout-xs="column">
+                        <span style="line-height: 1;">{{vm.rightScore}}</span>
+                        <span ng-if="vm.selectedTeamRight" style="font-size: 20px; margin: auto 0;">({{vm.selectedTeamRight.fields.winLoss.stringValue}})</span>
+                        <span style="line-height: 1;">{{vm.prettyRight}}</span>
+                    </div>
+                </div>
+                <div class="team-icons" layout="column" layout-align="none end">
+                    <div id="homeRight" class=" home-icon" ng-click="vm.toggleHomeCourt('right');">
+                        <i class="fas fa-h-square fa-3x"></i>
+                    </div>
+                    <div>
+                        <a style="color: #f44336;" href="https://www.sportsinsights.com/ncaab/injuries/" target="_blank"><i class="fas fa-medkit fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="right-win-container " ng-if="vm.rightWinner">
+                <p>
+                    <span>Confidence Score: {{vm.confidenceScore}}%</span>
+                    <i class="fas fa-check-circle fa-2x green"></i>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 
-<button ng-click="vm.showSampleConstant()">{{ 'home.button' | translate }}</button>
+<!-- <div layout="column">
+    <md-toolbar class="md-table-toolbar md-default">
+        <div class="md-toolbar-tools">
+            <span>Saved Matchups</span>
+        </div>
+    </md-toolbar>
 
-<button ng-click="vm.switchLanguage('en')">In English</button>
+    <md-table-container>
+        <table md-table multiple ng-model="vm.selected">
+            <thead md-head md-order="vm.query.order">
+                <tr md-row>
+                    <th md-column md-order-by="name"><span>Dessert (100g serving)</span></th>
+                    <th md-column md-numeric md-order-by="calories.value"><span>Calories</span></th>
+                    <th md-column md-numeric>Fat (g)</th>
+                    <th md-column md-numeric>Carbs (g)</th>
+                    <th md-column md-numeric>Protein (g)</th>
+                    <th md-column md-numeric>Sodium (mg)</th>
+                    <th md-column md-numeric>Calcium (%)</th>
+                    <th md-column md-numeric>Iron (%)</th>
+                </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-repeat="dessert in vm.desserts.data | filter: vm.filter.search | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
+                    <td md-cell>{{dessert.name}}</td>
+                    <td md-cell>{{dessert.calories.value}}</td>
+                    <td md-cell>{{dessert.fat.value | number: 1}}</td>
+                    <td md-cell>{{dessert.carbs.value}}</td>
+                    <td md-cell>{{dessert.protein.value | number: 1}}</td>
+                    <td md-cell>{{dessert.sodium.value}}</td>
+                    <td md-cell>{{dessert.calcium.value}}{{dessert.calcium.unit}}</td>
+                    <td md-cell>{{dessert.iron.value}}{{dessert.iron.unit}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
 
-<button ng-click="vm.switchLanguage('ru')">По-русски</button>
+    <md-table-pagination md-limit="vm.query.limit" md-limit-options="[5, 10, 15]" md-page="vm.query.page" md-total="{{vm.desserts.count}}" md-page-select></md-table-pagination>
+</div> -->
+
+
+<footer>
+    <div layout="row" layout-align="center center">
+        <div class="footer">
+            <p> Please note: HoopFire does not own any of the team, league or event logos/uniforms depicted within this site, we do not have the power to grant usage rights to anyone. All team and league information, sports logos, sports uniforms and names contained within this site are properties of their respective leagues, teams, ownership groups and/or organizations. Please source any information obtained from this site by providing a link back.</p>
+        </div>
+    </div>
+</footer>

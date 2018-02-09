@@ -3,6 +3,7 @@
 <head>
     <base href="/">
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
 
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
@@ -20,7 +21,7 @@
 </head>
 <body>
 
-<div ui-view=""></div>
+<div ui-view="" style="height: inherit"></div>
 
 <!-- build:js(src) scripts/vendor.js -->
 <!-- bower:js -->
@@ -37,6 +38,8 @@
 <!-- angular templates will be automatically converted in js and inserted here -->
 <!-- endinject -->
 <!-- endbuild -->
+
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
 </body>
 </html>
