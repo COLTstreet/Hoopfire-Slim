@@ -33,7 +33,7 @@
                     <div class="team-name" layout="row" layout-xs="column" layout-align-xs="end end">
                         <span style="line-height: 1;">{{vm.prettyLeft}}</span>
                         <span ng-if="vm.selectedTeamLeft" style="font-size: 20px; margin: auto 0;">({{vm.selectedTeamLeft.fields.winLoss.stringValue}})</span>
-                        <span style="line-height: 1;">{{vm.leftScore}}</span>
+                        <span style="line-height: 1;padding-left: 10%;">{{vm.leftScore}}</span>
                     </div>
                 </div>
             </div>
@@ -43,6 +43,7 @@
                     <span>Confidence Score: {{vm.confidenceScore}}%</span>
                     <i class="fas fa-check-circle fa-2x green"></i>
                 </p>
+                <md-button class="add-matchup-button" ng-click="vm.addMatchup()">Add Matchup</md-button>
             </div>
         </div>
         <div flex class="card-right">
@@ -68,7 +69,7 @@
             <div layout="row" layout-align="end none">
                 <div class="team-name-container">
                     <div class="team-name" layout="row" layout-xs="column">
-                        <span style="line-height: 1;">{{vm.rightScore}}</span>
+                        <span style="line-height: 1;padding-right: 10%">{{vm.rightScore}}</span>
                         <span ng-if="vm.selectedTeamRight" style="font-size: 20px; margin: auto 0;">({{vm.selectedTeamRight.fields.winLoss.stringValue}})</span>
                         <span style="line-height: 1;">{{vm.prettyRight}}</span>
                     </div>
@@ -87,49 +88,55 @@
                     <span>Confidence Score: {{vm.confidenceScore}}%</span>
                     <i class="fas fa-check-circle fa-2x green"></i>
                 </p>
+                <md-button class="add-matchup-button" ng-click="vm.addMatchup()">Add Matchup</md-button>
             </div>
         </div>
     </div>
+
+    <div class="matchup-container" layout="column" ng-if="vm.matchups.data.length > 0">
+        <md-toolbar class="md-table-toolbar md-default">
+            <div class="md-toolbar-tools">
+                <span>Saved Matchups</span>
+            </div>
+        </md-toolbar>
+
+        <md-table-container>
+            <table md-table multiple ng-model="vm.selected">
+                <thead md-head md-order="vm.query.order">
+                    <tr md-row>
+                        <th md-column md-order-by="leftTeam"><span>Team</span></th>
+                        <th md-column md-numeric md-order-by="leftScore.value"><span>Score</span></th>
+                        <th md-column class="table-center">Spread</th>
+                        <th md-column md-numeric md-order-by="totalPoints.value" class="table-center">Total Points</th>
+                        <th md-column md-numeric md-order-by="rightScore.value">Score</th>
+                        <th md-column md-order-by="rightTeam">Team</th>
+                        <th md-column md-numeric md-order-by="confidence.value"class="table-center">Confidence %</th>
+                        <th md-column>Game Time</th>
+                        <th md-column md-numeric>Home Court</th>
+                        <th md-column class="table-center">Remove</th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row ng-repeat="team in vm.matchups.data | filter: vm.filter.search | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
+                        <td md-cell>{{team.leftTeam}}</td>
+                        <td md-cell>{{team.leftScore.value}}</td>
+                        <td md-cell class="table-call-out">{{team.spread.team}} ({{team.spread.value}})</td>
+                        <td md-cell class="table-call-out">{{team.totalPoints.value}}</td>
+                        <td md-cell>{{team.rightScore.value}}</td>
+                        <td md-cell>{{team.rightTeam}}</td>
+                        <td md-cell class="table-center">{{team.confidence.value}}%</td>
+                        <td md-cell>{{team.gameTime}}</td>
+                        <td md-cell>{{team.neutral}}</td>
+                        <td md-cell class="table-center"><div ng-click="vm.removeMatchup($index)" style="cursor: pointer"><i class="fas fa-trash-alt fa-2x"></i></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+
+        <md-table-pagination md-limit="vm.query.limit" md-limit-options="[5, 10, 15]" md-page="vm.query.page" md-total="{{vm.matchups.data.length}}" md-page-select></md-table-pagination>
+    </div>
+
 </div>
-
-<!-- <div layout="column">
-    <md-toolbar class="md-table-toolbar md-default">
-        <div class="md-toolbar-tools">
-            <span>Saved Matchups</span>
-        </div>
-    </md-toolbar>
-
-    <md-table-container>
-        <table md-table multiple ng-model="vm.selected">
-            <thead md-head md-order="vm.query.order">
-                <tr md-row>
-                    <th md-column md-order-by="name"><span>Dessert (100g serving)</span></th>
-                    <th md-column md-numeric md-order-by="calories.value"><span>Calories</span></th>
-                    <th md-column md-numeric>Fat (g)</th>
-                    <th md-column md-numeric>Carbs (g)</th>
-                    <th md-column md-numeric>Protein (g)</th>
-                    <th md-column md-numeric>Sodium (mg)</th>
-                    <th md-column md-numeric>Calcium (%)</th>
-                    <th md-column md-numeric>Iron (%)</th>
-                </tr>
-            </thead>
-            <tbody md-body>
-                <tr md-row ng-repeat="dessert in vm.desserts.data | filter: vm.filter.search | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
-                    <td md-cell>{{dessert.name}}</td>
-                    <td md-cell>{{dessert.calories.value}}</td>
-                    <td md-cell>{{dessert.fat.value | number: 1}}</td>
-                    <td md-cell>{{dessert.carbs.value}}</td>
-                    <td md-cell>{{dessert.protein.value | number: 1}}</td>
-                    <td md-cell>{{dessert.sodium.value}}</td>
-                    <td md-cell>{{dessert.calcium.value}}{{dessert.calcium.unit}}</td>
-                    <td md-cell>{{dessert.iron.value}}{{dessert.iron.unit}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </md-table-container>
-
-    <md-table-pagination md-limit="vm.query.limit" md-limit-options="[5, 10, 15]" md-page="vm.query.page" md-total="{{vm.desserts.count}}" md-page-select></md-table-pagination>
-</div> -->
 
 
 <footer>

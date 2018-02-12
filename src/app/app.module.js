@@ -7,6 +7,13 @@
     'ui.router',
     'ngMaterial',
     'md.data.table'
-  ]);
+  ])
+  .config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('indigo')
+        .accentPalette('light-green')
+        .warnPalette('orange')
+        .backgroundPalette('grey');
+  });
 
 })();
