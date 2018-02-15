@@ -5,7 +5,6 @@ home {
 .container {
     font-size: 16px;
     padding: 1%;
-    background: #4253af;
 }
 
 .card-left {
@@ -13,6 +12,11 @@ home {
     margin-right: 15px;
     box-shadow: 0px 2px 5px 1px;
     background: #FAFAFA;
+}
+
+.team-logo {
+    height: 100px;
+    opacity: .5;
 }
 
 .card-right {
@@ -30,6 +34,10 @@ home {
 .team-name {
     height: 100px;
     font-size: 70px;
+}
+
+.team-name-container {
+    width: 100%;
 }
 
 .home-icon {
@@ -58,8 +66,8 @@ home {
 
 .table-call-out {
     text-align: center !important; 
-    background: #3f51b5; 
     color: white !important;
+    background: #3f51b5; 
 }
 
 .table-center {
@@ -70,11 +78,16 @@ home {
     background: #8BC34A;
 }
 
-footer {
-    padding: 2%;
-    text-align: center;
+nav {
+    background: #252525;
+}
+
+md-nav-bar.md-default-theme .md-button._md-nav-button.md-unselected, md-nav-bar .md-button._md-nav-button.md-unselected {
     color: white;
-    background: #4253af;
+}
+
+md-nav-bar.md-default-theme .md-button._md-nav-button.md-unselected, md-nav-bar .md-button._md-nav-button.md-unselected:hover {
+    background: #8BC34A;
 }
 
 /* Phone Screens */

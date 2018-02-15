@@ -1,28 +1,34 @@
 <md-nav-bar md-no-ink-bar="disableInkBar" md-selected-nav-item="vm.currentNav" nav-bar-aria-label="navigation links">
-      <md-nav-item md-nav-sref="home" name="home">NCAA</md-nav-item>
-      <md-nav-item md-nav-sref="nba" name="nba">NBA</md-nav-item>
+    <md-nav-item md-nav-sref="home" name="home">NCAA</md-nav-item>
+    <md-nav-item md-nav-sref="nba" name="nba">NBA</md-nav-item>
 </md-nav-bar>
+
 <div class="container">
     <div layout="row" layout-xs="column">
         <div flex class="card-left">
             <div layout="column" ng-cloak>
-                <form ng-submit="$event.preventDefault()" name="searchForm">
-                    <div layout-gt-sm="row">
-                        <md-autocomplete flex required
-                            md-input-name="autocompleteField"
-                            md-no-cache="vm.noCache"
-                            md-selected-item="vm.selectedTeamLeft"
-                            md-selected-item-change="vm.leftTeamChange(team)"
-                            md-search-text="vm.searchTextLeft"
-                            md-items="team in vm.querySearch(vm.searchTextLeft)"
-                            md-item-text="team.fields.team.stringValue"
-                            md-floating-label="Select a team">
-                            <md-item-template>
-                                <span md-highlight-text="vm.searchTextLeft">{{team.fields.team.stringValue}}</span>
-                            </md-item-template>
-                        </md-autocomplete>
+                <div layout="row" layout-align="end none">
+                    <form flex="75" ng-submit="$event.preventDefault()" name="searchForm">
+                        <div layout-gt-sm="row">
+                            <md-autocomplete flex required
+                                md-input-name="autocompleteField"
+                                md-no-cache="vm.noCache"
+                                md-selected-item="vm.selectedTeamLeft"
+                                md-selected-item-change="vm.leftTeamChange(team)"
+                                md-search-text="vm.searchTextLeft"
+                                md-items="team in vm.querySearch(vm.searchTextLeft)"
+                                md-item-text="team.fields.team.stringValue"
+                                md-floating-label="Select a team">
+                                <md-item-template>
+                                    <span md-highlight-text="vm.searchTextLeft">{{team.fields.team.stringValue}}</span>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </form>
+                    <div flex="25">
+                        <img class="team-logo" style="float: right;" src="app/assets/images/{{vm.selectedTeamLeft.fields.team.stringValue}}.png" />
                     </div>
-                </form>
+                </div>
             </div>
             <div layout="row">
                 <div class="team-icons" layout="column">
@@ -30,13 +36,15 @@
                         <i class="fas fa-h-square fa-3x"></i>
                     </div>
                     <div>
-                        <a style="color: #f44336;" href="https://www.sportsinsights.com/ncaab/injuries/" target="_blank"><i class="fas fa-medkit fa-2x"></i></a>
+                        <a style="color: #f44336;" href="https://www.cbssports.com/nba/injuries" target="_blank"><i class="fas fa-medkit fa-2x"></i></a>
                     </div>
                 </div>
-                <div class="team-name-container team-name" layout="row" layout-align="end none" layout-xs="column" layout-align-xs="end end">
-                    <span style="line-height: 1;">{{vm.prettyLeft}}</span>
-                    <span ng-if="vm.selectedTeamLeft" style="font-size: 20px; margin: auto 0;">({{vm.selectedTeamLeft.fields.winLoss.stringValue}})</span>
-                    <span style="line-height: 1;padding-left: 20%">{{vm.leftScore}}</span>
+                <div class="team-name-container">
+                    <div class="team-name" layout="row" layout-xs="column" layout-align-xs="end end">
+                        <span style="line-height: 1;">{{vm.prettyLeft}}</span>
+                        <span ng-if="vm.selectedTeamLeft" style="font-size: 20px; margin: auto 0;">({{vm.selectedTeamLeft.fields.wins.stringValue}}-{{vm.selectedTeamLeft.fields.losses.stringValue}})</span>
+                        <span style="line-height: 1;padding-left: 10%;">{{vm.leftScore}}</span>
+                    </div>
                 </div>
             </div>
             
@@ -50,28 +58,33 @@
         </div>
         <div flex class="card-right">
             <div layout="column" ng-cloak>
-                <form ng-submit="$event.preventDefault()" name="searchForm">
-                    <div layout-gt-sm="row">
-                        <md-autocomplete flex required
-                            md-input-name="autocompleteField"
-                            md-no-cache="vm.noCache"
-                            md-selected-item="vm.selectedTeamRight"
-                            md-selected-item-change="vm.rightTeamChange(team)"
-                            md-search-text="vm.searchTextRight"
-                            md-items="team in vm.querySearch(vm.searchTextRight)"
-                            md-item-text="team.fields.team.stringValue"
-                            md-floating-label="Select a team">
-                            <md-item-template>
-                                <span md-highlight-text="vm.searchTextRight">{{team.fields.team.stringValue}}</span>
-                            </md-item-template>
-                        </md-autocomplete>
+                <div layout="row">
+                    <div flex="25">
+                        <img class="team-logo" style="float: left;" src="app/assets/images/{{vm.selectedTeamRight.fields.team.stringValue}}.png" />
                     </div>
-                </form>
+                    <form flex="75" ng-submit="$event.preventDefault()" name="searchForm">
+                        <div layout-gt-sm="row">
+                            <md-autocomplete flex required
+                                md-input-name="autocompleteField"
+                                md-no-cache="vm.noCache"
+                                md-selected-item="vm.selectedTeamRight"
+                                md-selected-item-change="vm.rightTeamChange(team)"
+                                md-search-text="vm.searchTextRight"
+                                md-items="team in vm.querySearch(vm.searchTextRight)"
+                                md-item-text="team.fields.team.stringValue"
+                                md-floating-label="Select a team">
+                                <md-item-template>
+                                    <span md-highlight-text="vm.searchTextRight">{{team.fields.team.stringValue}}</span>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div layout="row" layout-align="end none">
                 <div class="team-name-container team-name" layout="row" layout-xs="column">
-                    <span style="line-height: 1;padding-right: 20%">{{vm.rightScore}}</span>
-                    <span ng-if="vm.selectedTeamRight" style="font-size: 20px; margin: auto 0;">({{vm.selectedTeamRight.fields.winLoss.stringValue}})</span>
+                    <span style="line-height: 1;padding-right: 10%">{{vm.rightScore}}</span>
+                    <span ng-if="vm.selectedTeamRight" style="font-size: 20px; margin: auto 0;">({{vm.selectedTeamRight.fields.wins.stringValue}}-{{vm.selectedTeamRight.fields.losses.stringValue}})</span>
                     <span style="line-height: 1;">{{vm.prettyRight}}</span>
                 </div>
                 <div class="team-icons" layout="column" layout-align="none end">
@@ -79,7 +92,7 @@
                         <i class="fas fa-h-square fa-3x"></i>
                     </div>
                     <div>
-                        <a style="color: #f44336;" href="https://www.sportsinsights.com/ncaab/injuries/" target="_blank"><i class="fas fa-medkit fa-2x"></i></a>
+                        <a style="color: #f44336;" href="https://www.cbssports.com/nba/injuries" target="_blank"><i class="fas fa-medkit fa-2x"></i></a>
                     </div>
                 </div>
             </div>
@@ -135,5 +148,4 @@
 
         <md-table-pagination md-limit="vm.query.limit" md-limit-options="[5, 10, 15]" md-page="vm.query.page" md-total="{{vm.matchups.data.length}}" md-page-select></md-table-pagination>
     </div>
-
 </div>

@@ -5,10 +5,20 @@
 
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
-    $stateProvider.state('home', {
+    var homeState = {
+      name: 'home',
       url: '/',
-      component: 'home',
-    });
+      component: 'home'
+    }
+  
+    var nbaState = {
+      name: 'nba',
+      url: '/nba',
+      component: 'nba'
+    }
+
+    $stateProvider.state(homeState);
+    $stateProvider.state(nbaState);
 
     $urlRouterProvider.otherwise('/');
   }

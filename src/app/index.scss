@@ -3,9 +3,24 @@ bower.json of your dependencies */
 // bower:scss
 // endbower
 
+html {
+    height: 100%;
+}
+
 body {
     font: normal 16px/150% Arial, Helvetica, sans-serif;
-    background: #4253af;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
+footer {
+    padding: 2%;
+    text-align: center;
+    color: white;
+    background: #252525;
+    grid-row-start: 2;
+    grid-row-end: 3;
 }
 
 /* Do not remove the comments below. It's the markers used by gulp-inject to inject all your sass files automatically */
