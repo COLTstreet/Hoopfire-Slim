@@ -11,7 +11,7 @@
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
         .primaryPalette('indigo')
-        .accentPalette('light-green')
+        .accentPalette('teal')
         .warnPalette('orange')
         .backgroundPalette('grey');
   });
