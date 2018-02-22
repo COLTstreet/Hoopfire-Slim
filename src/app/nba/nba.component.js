@@ -18,6 +18,10 @@
     vm.searchTextRight = null;
     vm.homeLeft = true;
     vm.neutral = false;
+    vm.selectedMode = 'md-fling';
+    vm.selectedDirection = 'left';
+    vm.isOpen = false;
+    vm.showProgress = false;
 
     //Functions
     vm.querySearch = querySearch;
@@ -26,6 +30,7 @@
     vm.toggleHomeCourt = toggleHomeCourt;
     vm.removeMatchup = removeMatchup;
     vm.addMatchup = addMatchup;
+    vm.getTodaysSchedule = getTodaysSchedule;
 
     init();
 
@@ -194,7 +199,7 @@
       }
     }
 
-    function addMatchup() {
+    function addMatchup(gameTime) {
         var matchup = {
             "leftTeam": vm.selectedTeamLeft.fields.team.stringValue,
             "leftScore": { "value": vm.leftScore },
@@ -217,7 +222,79 @@
             }
         }
 
+        if(gameTime) {
+            matchup.gameTime = gameTime;
+        }
+
         vm.matchups.data.push(matchup);
+    }
+
+     /**
+     * Function to retrieve the NBA schedule for today
+     */
+    function getTodaysSchedule() {
+        vm.showProgress = true;
+        var date = new Date();
+        date.setDate(date.getDate());
+        date.setHours(0,0,0,0);
+
+        var structuredQuery = {
+            "structuredQuery": {
+                "where" : {
+                    "fieldFilter" : { 
+                        "field": {"fieldPath": "date"}, 
+                        "op":"EQUAL", 
+                        "value": {"stringValue": date.toISOString()}
+                    }
+                },
+                "from": [{"collectionId": "nba-schedule"}]
+            }
+        }
+
+        $.ajax({
+            url : "https://firestore.googleapis.com/v1beta1/projects/hoopfire-api/databases/(default)/documents:runQuery?",
+            key: "a9d366bac3abc2f55bca7a4fa84512befed452f2",
+            type: "POST",
+            dataType : "json",
+            data: JSON.stringify(structuredQuery),
+            contentType: "application/json",
+            success : function(parsed_json) {
+                calculateTodaysGames(parsed_json);
+                vm.showProgress = false;
+            }
+        });
+    }
+
+    /**
+     * Grab Home and Away teams
+     * Calculate each game return from the schedule
+     */
+    function calculateTodaysGames(data) {
+        var homeTeam, awayTeam, gameTime, todaysMatchups = [];
+        data.forEach(function(matchup) {
+            vm.nbaTeams.forEach(function(team) {
+                if(team.fields.team.stringValue === matchup.document.fields.home.stringValue) {
+                    homeTeam = team;
+                }
+                if(team.fields.team.stringValue === matchup.document.fields.away.stringValue) {
+                    awayTeam = team;
+                }
+                gameTime = matchup.document.fields.start.stringValue;
+            });
+            if(homeTeam && awayTeam) {
+                todaysMatchups.push([homeTeam, awayTeam, gameTime]);
+            }
+        });
+
+        if(todaysMatchups.length > 0) {
+            todaysMatchups.forEach(function(matchup) {
+                vm.selectedTeamLeft = matchup[0];
+                vm.selectedTeamRight = matchup[1];
+    
+                calculateOdds();
+                vm.addMatchup(matchup[2]);
+            });
+        }
     }
 
     /**

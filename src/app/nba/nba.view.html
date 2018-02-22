@@ -1,7 +1,26 @@
 <md-nav-bar md-no-ink-bar="disableInkBar" md-selected-nav-item="vm.currentNav" nav-bar-aria-label="navigation links">
     <md-nav-item md-nav-sref="home" name="home">NCAA</md-nav-item>
     <md-nav-item md-nav-sref="nba" name="nba">NBA</md-nav-item>
+    
+    <span flex></span>
+    <md-fab-speed-dial md-open="vm.isOpen" md-direction="{{vm.selectedDirection}}" ng-class="vm.selectedMode">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-accent md-fab md-raised md-mini">
+                <md-tooltip md-direction="bottom">Tools</md-tooltip>
+                <i class="fas fa-bars"></i>
+            </md-button>
+        </md-fab-trigger>
+
+        <md-fab-actions>
+            <md-button ng-click="vm.getTodaysSchedule()" aria-label="Twitter" class="md-fab md-raised md-mini">
+                <md-tooltip md-direction="bottom">Today's Games</md-tooltip>
+                <i class="fas fa-clock"></i>
+            </md-button>
+        </md-fab-actions>
+    </md-fab-speed-dial>
 </md-nav-bar>
+
+<md-progress-linear class="md-accent" ng-if="vm.showProgress" md-mode="indeterminate"></md-progress-linear>
 
 <div class="container">
     <div layout="row" layout-xs="column">
