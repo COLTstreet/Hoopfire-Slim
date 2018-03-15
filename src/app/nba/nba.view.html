@@ -68,6 +68,7 @@
             </div>
             
             <div class="left-win-container " ng-if="vm.leftWinner">
+                <p>Spread: {{vm.spread}}</p>
                 <p>
                     <span>Confidence Score: {{vm.confidenceScore}}%</span>
                     <i class="fas fa-check-circle fa-2x green"></i>
@@ -116,6 +117,7 @@
                 </div>
             </div>
             <div class="right-win-container " ng-if="vm.rightWinner">
+                <p>Spread: {{vm.spread}}</p>
                 <p>
                     <span>Confidence Score: {{vm.confidenceScore}}%</span>
                     <i class="fas fa-check-circle fa-2x green"></i>

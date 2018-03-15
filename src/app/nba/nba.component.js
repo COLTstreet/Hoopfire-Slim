@@ -161,7 +161,7 @@
         
         var decSpread = Math.abs(homeScoreDecimal - (awayScoreDecimal));
         
-        if (vm.homeScore > vm.awayScore) {
+        if (homeScoreDecimal > awayScoreDecimal) {
           vm.spread = "-" + (Math.round(decSpread * 2) / 2).toFixed(1);
           vm.winner = homeTeam;
           vm.confidenceScore = vm.homeWinChance;
@@ -174,7 +174,7 @@
         if(vm.homeLeft) {
             vm.leftScore = vm.homeScore;
             vm.rightScore = vm.awayScore;
-            if(vm.homeScore > vm.awayScore) {
+            if(homeScoreDecimal > awayScoreDecimal) {
                 vm.leftWinner = true;
                 vm.rightWinner = false;
             } else {
@@ -184,7 +184,7 @@
         } else if(vm.homeRight) {
             vm.leftScore = vm.awayScore;
             vm.rightScore = vm.homeScore;
-            if(vm.homeScore > vm.awayScore) {
+            if(homeScoreDecimal > awayScoreDecimal) {
                 vm.leftWinner = false;
                 vm.rightWinner = true;
             } else {

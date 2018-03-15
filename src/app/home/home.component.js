@@ -183,7 +183,7 @@
         
         var decSpread = Math.abs(rightScoreDecimal - (leftScoreDecimal));
         
-        if (vm.leftScore > vm.rightScore) {
+        if (leftScoreDecimal > rightScoreDecimal) {
           vm.spread = "-" + (Math.round(decSpread * 2) / 2).toFixed(1);
           vm.winner = vm.selectedTeamLeft;
           vm.leftWinner = true;
