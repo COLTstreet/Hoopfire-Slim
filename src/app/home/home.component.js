@@ -70,7 +70,7 @@
      * Create filter function for a query string
      */
     function createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
+        var lowercaseQuery = query.toLowerCase();
 
       return function filterFn(state) {
         return (state.fields.team.stringValue.toLowerCase().indexOf(lowercaseQuery) === 0);
