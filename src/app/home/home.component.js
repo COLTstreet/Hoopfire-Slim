@@ -141,8 +141,10 @@
       var avgOffSum = 0;
       for (var i = 0; i < vm.collegeTeams.length; i++) {
           var team = vm.collegeTeams[i];
-          avgPosSum += Number(team.fields.adjT.stringValue);
-          avgOffSum += Number(team.fields.adjO.stringValue);
+          if(team.fields.team.stringValue != "Team") {
+            avgPosSum += Number(team.fields.adjT.stringValue);
+            avgOffSum += Number(team.fields.adjO.stringValue);
+          }
       }
       
       vm.avgPos = avgPosSum / vm.collegeTeams.length;
